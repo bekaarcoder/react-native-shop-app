@@ -1,16 +1,25 @@
 import React from "react";
-import { Button, Image, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
-const ProductCard = ({ item }) => {
+const ProductCard = ({ item, onViewDetail }) => {
   return (
     <View style={styles.productContainer}>
-      <View style={styles.imageContainer}>
-        <Image
-          source={{ uri: item.imageUrl }}
-          style={styles.image}
-          resizeMode="cover"
-        />
-      </View>
+      <TouchableOpacity onPress={onViewDetail}>
+        <View style={styles.imageContainer}>
+          <Image
+            source={{ uri: item.imageUrl }}
+            style={styles.image}
+            resizeMode="cover"
+          />
+        </View>
+      </TouchableOpacity>
       <Text style={styles.title}>{item.title}</Text>
       <Text style={styles.author}>by {item.author}</Text>
       <Text style={styles.price}>${item.price}</Text>

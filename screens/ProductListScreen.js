@@ -3,7 +3,7 @@ import { FlatList, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import ProductCard from "../components/shop/ProductCard";
 
-const ProductListScreen = () => {
+const ProductListScreen = ({ navigation }) => {
   const products = useSelector((state) => state.products);
   const { availableProducts } = products;
 
@@ -14,7 +14,17 @@ const ProductListScreen = () => {
         data={availableProducts}
         numColumns={2}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <ProductCard item={item} />}
+        renderItem={({ item }) => (
+          <ProductCard
+            item={item}
+            onViewDetail={() =>
+              navigation.navigate("ProductDetails", {
+                id: item.id,
+                title: item.title,
+              })
+            }
+          />
+        )}
       />
     </View>
   );
