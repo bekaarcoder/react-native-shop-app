@@ -8,7 +8,7 @@ import {
   View,
 } from "react-native";
 
-const ProductCard = ({ item, onViewDetail }) => {
+const ProductCard = ({ item, onViewDetail, addToCartHandle }) => {
   return (
     <View style={styles.productContainer}>
       <TouchableOpacity onPress={onViewDetail}>
@@ -24,7 +24,7 @@ const ProductCard = ({ item, onViewDetail }) => {
       <Text style={styles.author}>by {item.author}</Text>
       <Text style={styles.price}>${item.price}</Text>
       <View style={styles.buttonContainer}>
-        <Button title="Add To Cart" />
+        <Button title="Add To Cart" onPress={addToCartHandle} />
       </View>
     </View>
   );

@@ -1,15 +1,22 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { StyleSheet, Text, View, Image, Button } from "react-native";
 import Ratings from "../components/shop/Ratings";
+import { addToCart } from "../store/actions/cart";
 
 const ProductDetailScreen = ({ route }) => {
   const { id, title } = route.params;
 
+  const dispatch = useDispatch();
+
   const selectedProduct = useSelector((state) =>
     state.products.availableProducts.find((product) => product.id === id)
   );
-  const { author, imageUrl, rating } = selectedProduct;
+  const { author, imageUrl, rating, price } = selectedProduct;
+
+  const handleAddToCart = () => {
+    dispatch(addToCart({ id, title, price, imageUrl, author }));
+  };
 
   return (
     <View style={styles.container}>
@@ -25,7 +32,7 @@ const ProductDetailScreen = ({ route }) => {
       <Text style={styles.author}>by {author}</Text>
       <Ratings rating={rating} />
       <View style={styles.cartButton}>
-        <Button title="Add To Cart" />
+        <Button title="Add To Cart" onPress={handleAddToCart} />
       </View>
     </View>
   );
