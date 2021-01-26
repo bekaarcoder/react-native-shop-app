@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_FROM_CART } from "../types";
+import { ADD_ORDER, ADD_TO_CART, REMOVE_FROM_CART } from "../types";
 
 const initialState = {
   items: [],
@@ -37,6 +37,8 @@ export const cartReducer = (state = initialState, action) => {
         ),
       };
     }
+    case ADD_ORDER:
+      return initialState;
     default:
       return state;
   }
