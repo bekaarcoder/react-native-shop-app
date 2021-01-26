@@ -1,4 +1,4 @@
-import { ADD_TO_CART } from "../types";
+import { ADD_TO_CART, REMOVE_FROM_CART } from "../types";
 
 const initialState = {
   items: [],
@@ -16,7 +16,6 @@ export const cartReducer = (state = initialState, action) => {
               : item
           )
         : [...state.items, { ...addedItem, quantity: 1 }];
-      console.log(newCartItems);
       return {
         ...state,
         items: newCartItems,
@@ -25,6 +24,19 @@ export const cartReducer = (state = initialState, action) => {
           0
         ),
       };
+    case REMOVE_FROM_CART: {
+      const updatedItems = state.items.filter(
+        (item) => item.id !== action.payload
+      );
+      return {
+        ...state,
+        items: updatedItems,
+        cartTotal: updatedItems.reduce(
+          (acc, item) => acc + item.price * item.quantity,
+          0
+        ),
+      };
+    }
     default:
       return state;
   }

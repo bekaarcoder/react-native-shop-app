@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Button,
   FlatList,
@@ -10,10 +10,22 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { removeFromCart } from "../store/actions/cart";
+import { addOrder } from "../store/actions/orders";
 
 const CartScreen = () => {
   const cart = useSelector((state) => state.cart);
   const { cartTotal, items } = cart;
+
+  const dispatch = useDispatch();
+
+  const handleItemDelete = (id) => {
+    dispatch(removeFromCart(id));
+  };
+
+  const handleOrderNow = () => {
+    dispatch(addOrder(items, cartTotal));
+  };
 
   return (
     <View style={styles.container}>
@@ -21,10 +33,14 @@ const CartScreen = () => {
         <Text style={styles.summaryText}>
           Total: <Text style={styles.priceTotal}>${cartTotal.toFixed(2)}</Text>
         </Text>
-        <Button title="Order Now" disabled={items.length === 0} />
+        <Button
+          title="Order Now"
+          disabled={items.length === 0}
+          onPress={handleOrderNow}
+        />
       </View>
+      <Text style={styles.header}>Cart Items</Text>
       <View style={styles.itemsContainer}>
-        <Text style={styles.header}>Cart Items</Text>
         <FlatList
           data={items}
           keyExtractor={(item) => item.id}
@@ -43,7 +59,7 @@ const CartScreen = () => {
                 <Text style={styles.author}>{item.author}</Text>
                 <View style={styles.itemFooter}>
                   <Text>Qty: {item.quantity}</Text>
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={() => handleItemDelete(item.id)}>
                     <MaterialIcons name="delete" size={24} color="#d7263d" />
                   </TouchableOpacity>
                 </View>
@@ -59,6 +75,7 @@ const CartScreen = () => {
 const styles = StyleSheet.create({
   container: {
     margin: 20,
+    flex: 1,
   },
   summary: {
     flexDirection: "row",
@@ -72,6 +89,9 @@ const styles = StyleSheet.create({
   },
   priceTotal: {
     color: "#d1345b",
+  },
+  itemsContainer: {
+    flex: 1,
   },
   header: {
     fontFamily: "RobotoBold",

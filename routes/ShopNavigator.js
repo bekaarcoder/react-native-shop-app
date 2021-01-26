@@ -16,6 +16,17 @@ const ShopNavigator = () => {
         component={ProductListScreen}
         options={({ navigation }) => ({
           headerTitle: "All Products",
+          headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+              <Item
+                title="Menu"
+                iconName="md-menu"
+                onPress={() => {
+                  navigation.toggleDrawer();
+                }}
+              />
+            </HeaderButtons>
+          ),
           headerRight: () => (
             <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
               <Item
