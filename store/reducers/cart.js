@@ -1,4 +1,9 @@
-import { ADD_ORDER, ADD_TO_CART, REMOVE_FROM_CART } from "../types";
+import {
+  ADD_ORDER,
+  ADD_TO_CART,
+  DELETE_PRODUCT,
+  REMOVE_FROM_CART,
+} from "../types";
 
 const initialState = {
   items: [],

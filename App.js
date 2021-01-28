@@ -12,6 +12,7 @@ import {
 } from "@expo-google-fonts/roboto";
 import OrderNavigator from "./routes/OrderNavigator";
 import { Entypo } from "@expo/vector-icons";
+import AdminNavigator from "./routes/AdminNavigator";
 
 const Drawer = createDrawerNavigator();
 
@@ -40,6 +41,13 @@ const App = () => {
             component={OrderNavigator}
             options={{
               drawerIcon: () => <Entypo name="list" size={22} color="black" />,
+            }}
+          />
+          <Drawer.Screen
+            name="Admin"
+            component={AdminNavigator}
+            options={{
+              drawerIcon: () => <Entypo name="user" size={22} color="black" />,
             }}
           />
         </Drawer.Navigator>
