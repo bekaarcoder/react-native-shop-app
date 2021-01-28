@@ -7,13 +7,17 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { deleteProduct } from "../store/actions/product";
 import { removeFromCart } from "../store/actions/cart";
 
-const UserProductsScreen = () => {
+const UserProductsScreen = ({ navigation }) => {
   const products = useSelector((state) => state.products);
   const { userProducts } = products;
 
   const dispatch = useDispatch();
 
-  const onSelect = (item) => {};
+  const onSelect = (item) => {
+    navigation.navigate("EditProduct", {
+      id: item.id,
+    });
+  };
 
   const onHandleDelete = (id) => {
     dispatch(deleteProduct(id));
@@ -30,7 +34,7 @@ const UserProductsScreen = () => {
         renderItem={({ item }) => (
           <ProductCard item={item} onSelect={() => onSelect(item)}>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => onSelect(item)}>
                 <FontAwesome5 name="edit" size={24} color="#3f6c51" />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => onHandleDelete(item.id)}>

@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import UserProductsScreen from "../screens/UserProductsScreen";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/ui/CustomHeaderButton";
+import EditProductScreen from "../screens/EditProductScreen";
 
 const Stack = createStackNavigator();
 
@@ -25,7 +26,23 @@ const AdminNavigator = () => {
               />
             </HeaderButtons>
           ),
+          headerRight: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+              <Item
+                title="Add"
+                iconName="md-create"
+                onPress={() => {
+                  navigation.navigate("Cart");
+                }}
+              />
+            </HeaderButtons>
+          ),
         })}
+      />
+      <Stack.Screen
+        name="EditProduct"
+        component={EditProductScreen}
+        options={{ title: "Edit Product" }}
       />
     </Stack.Navigator>
   );
