@@ -32,7 +32,7 @@ const AdminNavigator = () => {
                 title="Add"
                 iconName="md-create"
                 onPress={() => {
-                  navigation.navigate("Cart");
+                  navigation.navigate("EditProduct");
                 }}
               />
             </HeaderButtons>
@@ -42,7 +42,24 @@ const AdminNavigator = () => {
       <Stack.Screen
         name="EditProduct"
         component={EditProductScreen}
-        options={{ title: "Edit Product" }}
+        options={({ navigation, route }) => ({
+          headerTitle:
+            route.params && route.params.productId
+              ? "Edit Product"
+              : "Add Product",
+          headerRight: () => {
+            const submitHandler = route.params && route.params.submit;
+            return (
+              <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                <Item
+                  title="Save"
+                  iconName="md-checkmark"
+                  onPress={submitHandler}
+                />
+              </HeaderButtons>
+            );
+          },
+        })}
       />
     </Stack.Navigator>
   );

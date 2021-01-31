@@ -7,15 +7,17 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { deleteProduct } from "../store/actions/product";
 import { removeFromCart } from "../store/actions/cart";
 
-const UserProductsScreen = ({ navigation }) => {
+const UserProductsScreen = ({ navigation, route }) => {
   const products = useSelector((state) => state.products);
   const { userProducts } = products;
+
+  console.log(route.params);
 
   const dispatch = useDispatch();
 
   const onSelect = (item) => {
     navigation.navigate("EditProduct", {
-      id: item.id,
+      productId: item.id,
     });
   };
 
