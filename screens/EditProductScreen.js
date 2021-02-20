@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { createProduct, updateProduct } from "../store/actions/product";
 
 const EditProductScreen = ({ navigation, route }) => {
   const productId = route.params && route.params.productId;
+  const dispatch = useDispatch();
 
   const product = useSelector((state) =>
     state.products.userProducts.find((prod) => prod.id === productId)
@@ -16,8 +18,12 @@ const EditProductScreen = ({ navigation, route }) => {
   const [price, setPrice] = useState(product ? product.price : "");
 
   const submitHandler = useCallback(() => {
-    console.log("submitting");
-  }, []);
+    if (product) {
+      dispatch(updateProduct(productId, title, author, image, rating, price));
+    } else {
+      dispatch(createProduct(title, author, image, rating, price));
+    }
+  }, [dispatch, productId, title, author, image, rating, price]);
 
   useEffect(() => {
     navigation.setParams({ submit: submitHandler });
